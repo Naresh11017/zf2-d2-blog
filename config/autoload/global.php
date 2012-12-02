@@ -18,7 +18,7 @@ return array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                 'params' => array(
                     'port'     => '3306',
-                    'dbname'   => 'shlumph',
+                    'dbname'   => 'database',
                     'user'     => 'root',
                     'password' => '',
                 ),
