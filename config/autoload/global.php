@@ -19,6 +19,8 @@ return array(
                 'params' => array(
                     'port'     => '3306',
                     'dbname'   => 'shlumph',
+                    'user'     => 'root',
+                    'password' => '',
                 ),
             ),
         ),
