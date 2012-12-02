@@ -1,0 +1,16 @@
+<?php $this->layout()->pageTitle = "Rob's Blog &raquo; Archive"; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'archive',
+    'uri' => '#',
+    'active' => true
+));
+?>
+
+<div class="post">
+    <h1>Select a year</h1>
+    <ul class="post-archives big">
+        <?php echo $this->archiveList(); ?>
+    </ul>
+</div>

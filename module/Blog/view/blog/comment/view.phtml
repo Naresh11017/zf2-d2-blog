@@ -1,0 +1,60 @@
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Admin &raquo; Manage Comments'; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'manage posts',
+    'uri' => $this->myUrl('blog/default', array('controller' => 'blog', 'action' => 'view-all')),
+    'pages' => array(
+        array(
+            'label' => 'manage comments',
+            'uri' => '#',
+            'active' => true
+        )
+    )
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1>Manage Comments</h1>
+
+    <table cellspacing="0" cellpadding="0" width="100%" class="comment-table">
+        <thead>
+            <th width="70">Post</th>
+            <th>Comment</th>
+            <th width="70"></th>
+        </thead>
+        <tbody>
+            <?php $index = 0; ?>
+            <?php foreach($this->comments as $comment) : ?>
+                <?php $index++; ?>
+                <tr id="comment-<?php echo $comment->getId(); ?>" class="<?php print ($index % 2 == 0) ? 'odd' : 'even'; ?>">
+                    <td>
+                        <a title="<?php echo $comment->getPost()->getTitle() ?>" href="<?php echo $this->myUrl('blog/default/query', array('controller' => 'blog', 'action' => 'edit', 'id' => $comment->getPost()->getId())); ?>"><?php echo $comment->getPost()->getId(); ?></a>
+                    </td>
+                    <td>
+                        <?php echo $comment->getComment(); ?>
+                        <p>
+                            <a title="edit" href="<?php echo $this->myUrl('blog/default/query', array('controller' => 'comment', 'action' => 'edit', 'id' => $comment->getId())); ?>">edit</a>
+                        </p>
+                        <p class="author">- <?php echo $comment->getName(); ?> (<?php echo $comment->getIpAddress(); ?>)</p>
+                    </td>
+                    <td>
+                        <a title="delete comment" href="javascript:deleteComment('<?php echo $comment->getId() ?>')">delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php echo $this->paginationControl($this->comments, null, 'pagination.phtml', array('route' => 'blog/default/query', 'controller' => 'comment', 'action' => 'view')) ?>
+</div>
+<script type="text/javascript">
+    function deleteComment(id) {
+        var url = '<?php echo $this->myUrl('blog/default/query', array('controller' => 'comment', 'action' => 'delete')); ?>?id=' + id;
+
+        $.get(url, function(data) {
+            $("#comment-" + id).fadeOut(400);
+        });
+    }
+</script>

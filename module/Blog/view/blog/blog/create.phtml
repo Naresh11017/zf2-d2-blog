@@ -1,0 +1,46 @@
+<script src="<?php echo $this->myUrl('blog') ?>ckeditor/ckeditor.js"></script>
+
+<?php $this->layout()->pageTitle = "Rob's Blog &raquo; Admin &raquo; Create Post"; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'manage posts',
+    'uri' => $this->myUrl('blog/default', array('controller' => 'blog', 'action' => 'view-all')),
+    'pages' => array(
+        array(
+            'label' => 'create post',
+            'uri' => '#',
+            'active' => true
+        )
+    )
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1>Create Post</h1>
+
+    <?php if(isset($this->message)) : ?>
+    <div class="message">
+        <?php echo $this->message; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php
+        $form = $this->form;
+        $form->prepare();
+        /* @var $form Blog\Form\PostForm */
+        echo $this->form()->openTag($form);
+        echo $this->formRow($form->get('title'));
+        echo $this->formRow($form->get('content'));
+
+        $category = $form->get('category');
+        echo $this->formRow($category->get('id'));
+
+        echo $this->formRow($form->get('isPublished'));
+        echo $this->formRow($form->get('csrf'));
+        echo $this->formInput($form->get('submit'));
+        echo $this->form()->closeTag($form);
+     ?>
+</div>

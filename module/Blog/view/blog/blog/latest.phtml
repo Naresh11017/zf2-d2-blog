@@ -1,0 +1,23 @@
+<?php $this->layout()->pageTitle = "Rob's Blog"; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => strtolower($this->post->getTitle()),
+    'uri' => '#',
+    'active' => true
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1><?php echo $this->post->getTitle(); ?></h1>
+    <div class="post-details">
+        <a title="<?php $this->post->getCategory()->getName(); ?>" href="<?php echo $this->myUrl('blog/default/query', array('controller' => 'category', 'action' => 'blogs', 'name' => urlencode($this->post->getCategory()->getName()))) ?>"><?php echo urlencode($this->post->getCategory()->getName()); ?></a> | Posted by: <?php echo $this->post->getUser()->getName() ?> on <?php echo $this->post->getDateAdded()->format("F jS, Y"); ?>
+    </div>
+    <div class="post-content">
+        <?php echo stripslashes($this->post->getContent()) ?>
+    </div>
+
+    <p><img class="blueCommentIcon" alt="comment" src="<?php echo $this->myUrl('blog');?>images/comment_blue.gif" /><a title="Make a comment" href="<?php echo $this->myUrl('blog/default/query', array('action' => 'view', 'category' => urlencode($this->post->getCategory()->getName()), 'title' => $this->post->getTitle())); ?>#parentId">Leave a comment</a></p>
+</div>

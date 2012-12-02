@@ -1,0 +1,31 @@
+<?php $this->layout()->pageTitle = "Rob's Blog &raquo; Archives &raquo; {$this->year}"; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'archive',
+    'uri' => $this->myUrl('blog/default', array('controller' => 'archive', 'action' => 'view')),
+    'pages' => array(
+        array(
+            'label' => $this->year,
+            'uri' => '#',
+            'active' => true
+        )
+    )
+));
+?>
+
+<div class="post">
+    <h1>Archives from year <?php echo $this->year ?></h1>
+    <?php if(count($this->posts) > 0) : ?>
+    <ul class="latest-blogs">
+    <?php foreach($this->posts as $post) : ?>
+        <li><a title="<?php echo $post->getTitle(); ?>" href="<?php echo $this->myUrl('blog/default/query', array('action' => 'view', 'year' => $this->year, 'title' => urlencode($post->getTitle()))); ?>"><?php echo $post->getTitle(); ?></a></li>
+    <?php endforeach; ?>
+    </ul>
+
+    <?php echo $this->paginationControl($this->posts, null, 'pagination.phtml', array('route' => 'blog/default/query', 'controller' => 'archive', 'action' => 'blogs')); ?>
+
+    <?php else : ?>
+        There have been no posts in the year <strong><?php echo $this->year; ?></strong>.
+    <?php endif; ?>
+</div>

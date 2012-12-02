@@ -1,0 +1,28 @@
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Admin'; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'manage posts',
+    'uri' => '#',
+    'active' => true
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1>Manage Posts</h1>
+
+    <ul class="latest-blogs">
+    <?php foreach($this->posts as $post) : ?>
+        <li>
+            <a title="view" href="<?php echo $this->myUrl('blog/default/query', array('controller' => 'blog', 'action' => 'edit', 'id' => $post->getId())) ?>"><?php echo $post->getTitle(); ?></a>
+            <p><em><strong>Date Added:</strong> <?php echo $post->getDateAdded()->format("F jS, Y @ g:ia"); ?></em></p>
+            <p><strong>Category:</strong> <?php echo $post->getCategory()->getName(); ?></p>
+            <p><strong>Published:</strong> <?php print ($post->getIsPublished()) ? '<span style="color: #5588BB; font-weight: bold; ">yes :)</span>' : '<span style="color: #FA0000; font-weight: bold; ">nope :(</span>'; ?></p>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+
+    <?php echo $this->paginationControl($this->posts, null, 'pagination.phtml', array('route' => 'blog/default/query', 'controller' => 'blog', 'action' => 'view-all')) ?>
+</div>

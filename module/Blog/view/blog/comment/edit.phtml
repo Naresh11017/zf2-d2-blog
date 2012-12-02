@@ -1,0 +1,42 @@
+<script src="<?php echo $this->myUrl('blog') ?>ckeditor/ckeditor.js"></script>
+
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Admin &raquo; Manage Comments'; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'manage posts',
+    'uri' => $this->myUrl('blog/default', array('controller' => 'blog', 'action' => 'view-all')),
+    'pages' => array(
+        array(
+            'label' => 'manage comments',
+            'uri' => $this->myUrl('blog/default', array('controller' => 'comment', 'action' => 'view')),
+            'pages' => array(array(
+                'label' => 'edit',
+                'uri' => '#',
+                'active' => true
+            ))
+        )
+    )
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1>Edit Comments</h1>
+    <div class="box">
+        <?php
+            $form = $this->form;
+            $form->prepare();
+            /* @var $form Blog\Form\CommentForm */
+            echo $this->form()->openTag($form);
+            echo $this->formRow($form->get('name'));
+            echo $this->formRow($form->get('email'));
+            echo $this->formRow($form->get('website'));
+            echo $this->formRow($form->get('comment'));
+            echo $this->formInput($form->get('submit'));
+            echo $this->form()->closeTag($form);
+         ?>
+    </div>
+
+</div>

@@ -1,0 +1,141 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <?php $title = ($this->pageTitle) ? $this->pageTitle : "Rob's Blog"; ?>
+
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <meta name="title" content="<?php echo $title ?>" />
+    <meta name="Description" content="Need a website? Rob Keplin is a freelance web developer, ready to build and design websites from static to dynamic." />
+    <meta name="Keywords" content="Web Design, Web Development, freelance, PHP, MySQL, JavaScript, ASP.NET" />
+    <meta name="language" content="English" />
+    <meta name="author" content="Rob Keplin" />
+    <meta name="copyright" content="Copyright 2012" />
+    <meta name="robots" content="All" />
+
+    <title>
+        <?php echo $title; ?>
+    </title>
+
+    <link href="<?php echo $this->myUrl('blog');?>css/styles.css" type="text/css" rel="stylesheet" />
+    <link href="<?php echo $this->myUrl('blog');?>blog/rss/" title="RSS" rel="alternate" type="application/rss+xml" />
+    <link rel="shortcut icon" href="<?php echo $this->myUrl('blog');?>favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" src="<?php echo $this->myUrl('blog');?>js/jquery.js"></script>
+    <script type="text/javascript" src="<?php echo $this->myUrl('blog');?>js/jqueryColors.js"></script>
+    <script type="text/javascript" src="<?php echo $this->myUrl('blog');?>js/scripts.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <div class="container">
+            <div id="logo"></div>
+            <div id="menu">
+                <div id="search">
+                    <form id="searchform" method="GET" action="<?php echo $this->myUrl('blog/search') ?>">
+                        <p><input type="text" id="query" name="search" /></p>
+                        <p><a id="searchBtn" href="javascript:submitSearch();"></a></p>
+                    </form>
+                </div>
+                <ul>
+                    <li><a title="Rob's Home" href="<?php echo $this->myUrl('blog');?>">Home</a></li>
+                    <li><a title="Select a category" href="<?php echo $this->myUrl('blog/default', array('controller' => 'category', 'action' => 'view'));?>">Categories</a>
+                        <ul>
+                            <?php echo $this->categoryList(); ?>
+                        </ul>
+                    </li>
+                    <li><a title="Archive" href="<?php echo $this->myUrl('blog/default', array('controller' => 'archive', 'action' => 'view'));?>">Archive</a></li>
+                    <li><a title="Contact Rob" href="<?php echo $this->myUrl('blog/contact');?>">Contact</a></li>
+                    <li><a title="About Rob" href="<?php echo $this->myUrl('blog/about');?>">About</a></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="container">
+            <?php echo $this->adminLinks(); ?>
+
+            <div class="breadcrumbs">
+                <?php echo $this->navigation()->breadcrumbs()->setSeparator(' &raquo; '); ?>
+            </div>
+
+            <?php if($this->notifications) : ?>
+                <?php echo $this->notifications; ?>
+            <?php endif; ?>
+
+            <div id="left">
+                <div class="rightPad">
+                    <?php echo $this->content; ?>
+                </div>
+            </div>
+            <div id="right">
+                <div class="leftPad">
+                    <h3>About Rob</h3>
+                    <div id="picture">
+                        <img alt="rob keplin" src="<?php echo $this->myUrl('blog');?>images/rob.png" />
+                    </div>
+                    <div class="about">
+                       I'm a web application developer, currently enjoying life in New England (USA).
+                    </div>
+
+                    <h3 class="sector">QOTL</h3>
+                    <p>
+                        <?php echo $this->displayQuote(); ?>
+                    </p>
+
+                    <h3 class="sector">Recent Posts</h3>
+                    <ul class="latest-blogs">
+                        <?php echo $this->recentPostList(); ?>
+                    </ul>
+
+                    <h3 class="sector">Post Categories</h3>
+                    <ul class="post-categories">
+                        <?php echo $this->categoryList(); ?>
+                    </ul>
+
+                    <h3 class="sector">Archive</h3>
+                    <ul class="post-archives">
+                        <?php echo $this->archiveList(); ?>
+                    </ul>
+
+                    <h3 class="sector">External Links</h3>
+                    <ul class="external-links">
+                        <li class="linkedin"><a title="Linked In" href="http://www.linkedin.com/in/robkeplin" rel="nofollow">Linked In</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <a title="Rob's Home" href="<?php echo $this->myUrl('blog');?>">Home</a>
+            <a title="Rob's Blog" href="<?php echo $this->myUrl('blog/default', array('controller' => 'category', 'action' => 'view'));?>">Categories</a>
+            <a title="Archive" href="<?php echo $this->myUrl('blog/default', array('controller' => 'archive', 'action' => 'view'));?>">Archive</a>
+            <a title="Contact Rob" href="<?php echo $this->myUrl('blog/contact');?>">Contact</a>
+            <a title="About" href="<?php echo $this->myUrl('blog/about');?>">About</a>
+            <a title="RSS Feed" href="<?php echo $this->myUrl('blog/default', array('controller' => 'blog', 'action' => 'rss'));?>">RSS</a>
+            <a title="Admin Panel" href="<?php echo $this->myUrl('blog/default', array('controller' => 'user', 'action' => 'login'));?>">Administration</a>
+            <br />
+            <!--
+            Copyright &copy; 2010. Rob Keplin. All Rights Reserved.
+            -->
+            <div class="zf">
+                <a title="Powered by Zend Framework" href="http://framework.zend.com/">
+                    <img alt="Zend Framework" src="<?php echo $this->myUrl('blog');?>images/zf.png" />
+                </a>
+            </div>
+
+            <script type="text/javascript">
+                //var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                //document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+            </script>
+            <script type="text/javascript">
+                //var pageTracker = _gat._getTracker("UA-3883176-2");
+                //pageTracker._trackPageview();
+            </script>
+        </div>
+    </div>
+</body>
+</html>

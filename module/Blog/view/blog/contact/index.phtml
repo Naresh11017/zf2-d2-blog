@@ -1,0 +1,29 @@
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Contact'; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'contact',
+    'uri' => '#',
+    'active' => true
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1>Contact Rob</h1>
+    <div class="box">
+    <?php
+        $form = $this->form;
+        $form->prepare();
+        /* @var $form Blog\Form\ContactForm */
+        echo $this->form()->openTag($form);
+        echo $this->formRow($form->get('name'));
+        echo $this->formRow($form->get('email'));
+        echo $this->formRow($form->get('comment'));
+        echo $this->formRow($form->get('captcha'));
+        echo $this->formInput($form->get('submit'));
+        echo $this->form()->closeTag($form);
+     ?>
+     </div>
+</div>

@@ -1,0 +1,83 @@
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Categories &raquo; ' . $this->post->getCategory()->getName() . ' &raquo; ' . $this->post->getTitle(); ?>
+
+<?php
+
+if($this->query->year) {
+    $pages = array(
+        'label' => 'archive',
+        'uri' => $this->myUrl('blog/default', array('controller' => 'archive', 'action' => 'view')),
+        'pages' => array(
+            array(
+                'label' => $this->query->year,
+                'uri' => $this->myUrl('blog/default/query', array('controller' => 'archive', 'action' => 'blogs', 'year' => urlencode($this->query->year))),
+                'pages' => array(
+                    array(
+                        'label' => strtolower($this->post->getTitle()),
+                        'uri' => '#',
+                        'active' => true
+                    )
+                )
+            )
+        )
+    );
+} else if($this->query->category) {
+    $pages = array(
+        'label' => 'categories',
+        'uri' => $this->myUrl('blog/default', array('controller' => 'category', 'action' => 'view')),
+        'pages' => array(
+            array(
+                'label' => strtolower($this->query->category),
+                'uri' => $this->myUrl('blog/default/query', array('controller' => 'category', 'action' => 'blogs', 'name' => urlencode($this->query->category))),
+                'pages' => array(
+                    array(
+                        'label' => strtolower($this->post->getTitle()),
+                        'uri' => '#',
+                        'active' => true
+                    )
+                )
+            )
+        )
+    );
+} else {
+    $pages = array(
+        'label' => strtolower($this->post->getTitle()),
+        'uri' => '#',
+        'active' => true
+    );
+}
+
+$this->crumbContainer($pages);
+
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1><?php echo $this->post->getTitle(); ?></h1>
+    <div class="post-details">
+        <a title="<?php echo $this->post->getCategory()->getName(); ?>" href="<?php echo $this->myUrl('blog/default/query', array('controller' => 'category', 'action' => 'blogs', 'name' => $this->post->getCategory()->getName())); ?>"><?php echo $this->post->getCategory()->getName(); ?></a> | Posted by: <?php echo $this->post->getUser()->getName(); ?> on <?php echo $this->post->getDateAdded()->format("F jS, Y"); ?>
+    </div>
+    <div class="post-content">
+        <?php echo $this->post->getContent() ?>
+    </div>
+</div>
+
+<div class="comments">
+    <?php echo $this->displayComments($this->post->getComments()); ?>
+    <div class="box">
+        <?php
+            $form = $this->form;
+            $form->prepare();
+            /* @var $form Blog\Form\CommentForm */
+            echo $this->form()->openTag($form);
+            echo $this->formRow($form->get('parentId'));
+            echo $this->formRow($form->get('name'));
+            echo $this->formRow($form->get('email'));
+            echo $this->formRow($form->get('website'));
+            echo $this->formRow($form->get('comment'));
+            echo $this->formRow($form->get('captcha'));
+            echo $this->formInput($form->get('submit'));
+            echo $this->form()->closeTag($form);
+         ?>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<?php
+    $route = (isset($route)) ? $route : null;
+
+    $extra = array();
+
+    if(isset($controller)) {
+        $extra['controller'] = $controller;
+    }
+
+    if(isset($action)) {
+        $extra['action'] = $action;
+    }
+
+    $params = array_merge($extra, $_GET);
+?>
+<div class="paginationControl">
+<!-- Previous page link -->
+<?php if (isset($previous)): ?>
+  <a href="<?php echo $this->myUrl($route, array_merge($params, array('page' => $previous)), null, false); ?>">&laquo; Previous</a> |
+<?php else: ?>
+  <span class="disabled">&laquo; Previous</span> |
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+    <a href="<?php echo $this->myUrl($route, array_merge($params, array('page' => $page)), null, false); ?>"><?php echo $page; ?></a> |
+  <?php else: ?>
+    <strong><?php echo $page; ?></strong> |
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($next)): ?>
+  <a href="<?php echo $this->myUrl($route, array_merge($params, array('page' => $next)), null, false); ?>">Next &raquo;</a>
+<?php else: ?>
+  <span class="disabled">Next &raquo;</span>
+<?php endif; ?>
+</div>

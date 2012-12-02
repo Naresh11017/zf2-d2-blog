@@ -1,0 +1,47 @@
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Search'; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'search',
+    'uri' => '#',
+    'active' => true
+));
+?>
+
+<?php echo $this->notifications(); ?>
+
+<div class="post">
+    <h1>Search Rob's Blog</h1>
+
+    <div class="box search">
+        <?php
+            $form = $this->form;
+            $form->prepare();
+            /* @var $form Blog\Form\SearchForm */
+            echo $this->form()->openTag($form);
+            echo '<div class="floatLeft">' . $this->formRow($form->get('search')) . '</div>';
+            echo '<div class="floatLeft">' . $this->formRow($form->get('category')) . '</div>';
+            echo '<div class="floatLeft">' . $this->formRow($form->get('year')) . '</div>';
+            echo '<div class="floatLeft" style="margin-top: 11px;">' . $this->formInput($form->get('submit')) . '</div>';
+            echo $this->form()->closeTag($form);
+         ?>
+         <div class="clear"></div>
+    </div>
+
+    <?php if(isset($this->posts) && (count($this->posts) > 0)) : ?>
+        <h1>Search Results</h1>
+        <ul class="latest-blogs">
+        <?php foreach($this->posts as $post) : ?>
+            <?php $url = $this->myUrl('blog/default/query', array('action' => 'view', 'title' => urlencode($post->getTitle()))); ?>
+            <li><a title="<?php echo $post->getTitle(); ?>" href="<?php echo $url; ?>"><?php echo $post->getTitle(); ?></a>
+                <p><em><?php echo strip_tags(substr($post->getContent(), 0, 200)) ?></em> ... <br /><a title="continue reading" href="<?php echo $url; ?>">continue reading</a></p>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+        <?php echo $this->paginationControl($this->posts, null, 'pagination.phtml', array('route' => 'blog/search/query')); ?>
+    <?php elseif(isset($this->posts) && (count($this->posts) == 0)) : ?>
+        <h1>Search Results</h1>
+        No results were found.
+    <?php endif; ?>
+
+</div>

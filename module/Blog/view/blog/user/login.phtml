@@ -1,0 +1,27 @@
+<?php $this->layout()->pageTitle = 'Rob\'s Blog &raquo; Admin &raquo; Login'; ?>
+
+<?php
+$this->crumbContainer(array(
+    'label' => 'login',
+    'uri' => '#',
+    'active' => true
+));
+?>
+
+<?php echo $this->notifications(); ?>
+<div class="post">
+    <h1>Administators Only</h1>
+    <div class="box">
+    <?php
+        $form = $this->form;
+        $form->prepare();
+        /* @var $form Blog\Form\LoginForm */
+        echo $this->form()->openTag($form);
+        echo $this->formRow($form->get('email'));
+        echo $this->formRow($form->get('password'));
+        echo $this->formRow($form->get('csrf'));
+        echo $this->formInput($form->get('submit'));
+        echo $this->form()->closeTag($form);
+     ?>
+     </div>
+ </div>
