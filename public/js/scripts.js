@@ -11,16 +11,30 @@ function submitSearch()
 }
 
 $(document).ready(function() {
+    
+    $("#searchInput").hover(
+        function() {
+            if($(this).attr('value') == 'Search...') {
+                $(this).attr('value', '');
+                $(this).focus();
+            }
+        },
+        function() {
+            if($(this).attr('value') == '') {
+                $(this).attr('value', 'Search...');
+            }
+        }
+    );
 
     $("#menu ul li a").hover(
         function() {
-            $(this).stop(true, true).animate({ backgroundColor: '#434b57' }, 400)
+            $(this).stop(true, true).animate({backgroundColor: '#434b57'}, 400)
         },
         function() {
             if($(this).hasClass("selected")) {
-                $(this).stop(true, true).animate({ backgroundColor: '#333333' }, 400)
+                $(this).stop(true, true).animate({backgroundColor: '#333333'}, 400)
             } else {
-                $(this).stop(true, true).animate({ backgroundColor: '#383d44' }, 400)
+                $(this).stop(true, true).animate({backgroundColor: '#383d44'}, 400)
             }
         }
     );

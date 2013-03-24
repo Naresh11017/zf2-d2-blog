@@ -10,7 +10,7 @@
     <meta name="Keywords" content="Web Design, Web Development, freelance, PHP, MySQL, JavaScript, ASP.NET" />
     <meta name="language" content="English" />
     <meta name="author" content="Rob Keplin" />
-    <meta name="copyright" content="Copyright 2012" />
+    <meta name="copyright" content="Copyright 2013" />
     <meta name="robots" content="All" />
 
     <title>
@@ -24,6 +24,13 @@
     <script type="text/javascript" src="<?php echo $this->myUrl('blog');?>js/jquery.js"></script>
     <script type="text/javascript" src="<?php echo $this->myUrl('blog');?>js/jqueryColors.js"></script>
     <script type="text/javascript" src="<?php echo $this->myUrl('blog');?>js/scripts.js"></script>
+    <!--[if gte IE 9]>
+      <style type="text/css">
+        .gradient {
+           filter: none;
+        }
+      </style>
+    <![endif]-->
 </head>
 
 <body>
@@ -33,8 +40,8 @@
             <div id="menu">
                 <div id="search">
                     <form id="searchform" method="GET" action="<?php echo $this->myUrl('blog/search') ?>">
-                        <p><input type="text" id="query" name="search" /></p>
-                        <p><a id="searchBtn" href="javascript:submitSearch();"></a></p>
+                        <input type="text" id="searchInput" name="search" value="Search..." />
+                        <input type="submit" value="Search" />
                     </form>
                 </div>
                 <ul>
@@ -72,8 +79,8 @@
             <div id="right">
                 <div class="leftPad">
                     <h3>About Rob</h3>
-                    <div id="picture">
-                        <img alt="rob keplin" src="<?php echo $this->myUrl('blog');?>images/rob.png" />
+                    <div id="picture" style="width: 70px; height: 70px;">
+                        <?php echo $this->gravatar('rkeplin@gmail.com', array('img_size' => 70), array('alt' => 'gravatar', 'title' => 'avatar' )); ?>
                     </div>
                     <div class="about">
                        I'm a web application developer, currently enjoying life in New England (USA).
