@@ -8,5 +8,10 @@ if(isset($_GET['url']))
     require_once 'lib/Image.php';
     $image = new Image($_GET['url']);
     $image->resize($width, $height);
-    $image->display();
+    
+    if(count($image->getErrors()) == 0) {
+        $image->display();
+    } else {
+        //Display some other image?
+    }
 }

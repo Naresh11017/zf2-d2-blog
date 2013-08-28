@@ -11,17 +11,22 @@ class Image
     /**
      * @var string 
      */
-    protected $_url;
-    
-    /**
-     * @var int
-     */
-    protected $_quality;
+    private $_url;
     
     /**
      * @var mixed {boolean, image resource} 
      */
-    protected $_image;
+    private $_image;
+    
+    /**
+     * @var int
+     */
+    private $_quality;
+    
+    /**
+     * @var array
+     */
+    private $_errors;
 
     /**
      * Constructor
@@ -30,12 +35,13 @@ class Image
      */
     public function __construct($url, $quality = 100)
     {
+        $this->_errors = array();
+        $this->_image = false;
         $this->_quality = $quality;
         $this->_url = $url;
-        $this->_image = false;
         
         if(!$this->_setResource()) {
-            throw new Exception('Unable to set image resource.');
+            $this->_errors[] = 'Unable to set image resource.';
         }
     }
     
@@ -79,6 +85,10 @@ class Image
      */
     public function resize($new_width, $new_height)
     {
+        if(!$this->_image) {
+            throw new Exception('The image resource is not set up.');
+        }
+        
         $old_width = imagesx($this->_image);
         $old_height = imagesy($this->_image);
 
@@ -107,8 +117,23 @@ class Image
      */
     public function display()
     {
+        if(!$this->_image) {
+            throw new Exception('The image resource is not set up.');
+        }
+        
         header('Content-type: image/jpeg');
         imagejpeg($this->_image, null, $this->_quality);
         imagedestroy($this->_image);
+    }
+    
+    /**
+     * Gets errors
+     * 
+     * @param void
+     * @return array
+     */
+    public function getErrors()
+    {
+        return $this->_errors;
     }
 }
